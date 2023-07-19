@@ -13,6 +13,13 @@ module.exports = {
         "lightGradient-lt-rb": "linear-gradient(135deg, #CE7B9A 0%, #CC5C8B 100%)",
         "lightGradient-rt-lb": "linear-gradient(225deg, #CE7B9A 0%, #CC5C8B 100%)",
       },
+      colors: {
+        textColor: "#F1E2F8",
+        darkBG: "#16071D",
+        darkPurple: "#6F1B5F",
+        normalPurple: "#BD2E5B",
+        lightPurple: "#CE7B9A",
+      }
     },
   },
   plugins: [],
