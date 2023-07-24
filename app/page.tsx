@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,11 +25,33 @@ export default function Home() {
           vel semper. Sed lorem ultrices diam nec a nisl sed lorem.
         </p>
       </section>
+
+      
       <section className="md:w-2/5 w-full grid grid-rows-2 grid-cols-2 md:h-80 h-64 gap-4">
-        <button className="shadow-inner h-full rounded-tr-[5rem] rounded-bl-[5rem] bg-darkGradient">sdfsdf</button>
-        <button className="shadow-inner h-full rounded-tr-[5rem] rounded-tl-[5rem] rounded-br-[5rem] bg-lightGradient-lb-rt">sdfsdf</button>
-        <button className="shadow-inner h-full rounded-tl-[5rem] rounded-bl-[5rem] rounded-br-[5rem] bg-lightGradient-rt-lb">sdfsdf</button>
-        <button className="shadow-inner h-full rounded-tr-[5rem] rounded-bl-[5rem] rounded-br-[5rem] bg-lightGradient-lt-rb">sdfsdf</button>
+        <Link 
+          href={"/body-poses"} 
+          className="transition-all hover:scale-105 shadow-inner h-full rounded-tr-[5rem] rounded-bl-[5rem] bg-darkGradient flex items-center justify-center"
+        >
+          sdfsdf
+        </Link>
+        <Link 
+          href="/" 
+          className="transition-all hover:scale-105 shadow-inner h-full rounded-tr-[5rem] rounded-tl-[5rem] rounded-br-[5rem] bg-lightGradient-lb-rt flex items-center justify-center"
+        >
+          sdfsdf
+        </Link>
+        <Link 
+          href="/" 
+          className="transition-all hover:scale-105 shadow-inner h-full rounded-tl-[5rem] rounded-bl-[5rem] rounded-br-[5rem] bg-lightGradient-rt-lb flex items-center justify-center"
+        >
+          sdfsdf
+        </Link>
+        <Link 
+          href="/" 
+          className="transition-all hover:scale-105 shadow-inner h-full rounded-tr-[5rem] rounded-bl-[5rem] rounded-br-[5rem] bg-lightGradient-lt-rb flex items-center justify-center"
+        >
+          sdfsdf
+        </Link>
       </section>
     </main>
   );

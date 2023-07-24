@@ -4,6 +4,8 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
+
+
   ],
   theme: {
     extend: {
@@ -18,7 +20,11 @@ module.exports = {
         darkBG: "#16071D",
         darkPurple: "#6F1B5F",
         normalPurple: "#BD2E5B",
+        normalPurpleShadow: "#BD2E5B52",
         lightPurple: "#CE7B9A",
+      },
+      fontFamily: {
+        "poppins": ["Poppins", "system-ui", "Georgia", "SFMono-Regular"]
       }
     },
   },
