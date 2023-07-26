@@ -5,7 +5,32 @@ import React, {useState, useEffect} from 'react'
 const Page = () => {
   const [clothing, setClothing] = useState("All");
   const [gender, setGender] = useState("All");
-  const [age, setAge] = useState(4)
+  const [age, setAge] = useState(3)
+  // const zipAge = {
+  //   0: "Teen",
+  //   1: "Adult",
+  //   2: "Elder",
+  //   3: "All"
+  // }
+  const zipAge = (item: number) => {
+    switch (item) {
+      case 0:
+        return "Only Teens"
+        break;
+      case 1:
+        return "Only Adults"
+        break;
+      case 2:
+        return "Only Elders"
+        break;
+      case 3:
+        return "All Ages"
+        break;
+      default:
+        return "undefined"
+        break;
+    }
+  }
   return (
     <div className='flex flex-col justify-center items-center h-full px-6'>
       <div className='flex flex-col justify-center items-center gap-10'>
@@ -23,14 +48,23 @@ const Page = () => {
         </div>
 
         <div className="inline-flex rounded-md shadow-sm">
-          <button className="sm:min-w-[160px] min-w-[90px] px-4 py-2 text-sm font-medium bg-darkPurple rounded-l-lg border-2 border-normalPurple text-white hover:text-white hover:bg-normalPurple focus:ring-blue-500 focus:text-white">
-            Profile
+          <button 
+            className={`sm:min-w-[160px] min-w-[90px] px-4 py-2 text-sm font-medium ${clothing === "Clothed" ? "bg-normalPurple" : "bg-darkPurple"} rounded-l-lg border-2 border-normalPurple text-white hover:text-white hover:bg-normalPurple focus:ring-blue-500 focus:text-white`}
+            onClick={()=>setClothing("Clothed")}
+          >
+            Clothed
           </button>
-          <button className="sm:min-w-[160px] min-w-[90px] px-4 py-2 text-sm font-medium bg-darkPurple border-2 border-l-0 border-normalPurple text-white hover:text-white hover:bg-normalPurple focus:ring-blue-500 focus:text-white">
-            Settings
+          <button 
+            className={`sm:min-w-[160px] min-w-[90px] px-4 py-2 text-sm font-medium ${clothing === "All" ? "bg-normalPurple" : "bg-darkPurple"} border-2 border-l-0 border-normalPurple text-white hover:text-white hover:bg-normalPurple focus:ring-blue-500 focus:text-white`}
+            onClick={()=>setClothing("All")}
+          >
+            Both
           </button>
-          <button className="sm:min-w-[160px] min-w-[90px] px-4 py-2 text-sm font-medium bg-darkPurple border-2 border-l-0 rounded-r-lg border-normalPurple text-white hover:text-white hover:bg-normalPurple focus:ring-blue-500 focus:text-white">
-            Messages
+          <button 
+            className={`sm:min-w-[160px] min-w-[90px] px-4 py-2 text-sm font-medium ${clothing === "Nude" ? "bg-normalPurple" : "bg-darkPurple"} border-2 border-l-0 rounded-r-lg border-normalPurple text-white hover:text-white hover:bg-normalPurple focus:ring-blue-500 focus:text-white`}
+            onClick={()=>setClothing("Nude")}
+          >
+            Nude
           </button>
         </div>
 
@@ -41,14 +75,29 @@ const Page = () => {
         </div>
 
         <div>
-          <button className="sm:min-w-[160px] min-w-[90px] px-4 py-2 text-sm font-medium bg-darkPurple rounded-l-lg border-2 border-normalPurple text-white hover:text-white hover:bg-normalPurple focus:ring-blue-500 focus:text-white">
-            Profile
+          <button 
+            className={`sm:min-w-[160px] min-w-[90px] px-4 py-2 text-sm font-medium ${gender === "Feminine" ? "bg-normalPurple" : "bg-darkPurple"}  rounded-l-lg border-2 border-normalPurple text-white hover:text-white hover:bg-normalPurple focus:ring-blue-500 focus:text-white`}
+            onClick={() => {
+              setGender("Feminine")
+            }}
+          >
+            Feminine
           </button>
-          <button className="sm:min-w-[160px] min-w-[90px] px-4 py-2 text-sm font-medium bg-darkPurple border-2 border-l-0 border-normalPurple text-white hover:text-white hover:bg-normalPurple focus:ring-blue-500 focus:text-white">
-            Settings
+          <button 
+            className={`sm:min-w-[160px] min-w-[90px] px-4 py-2 text-sm font-medium ${gender === "All" ? "bg-normalPurple" : "bg-darkPurple"}  border-2 border-l-0 border-normalPurple text-white hover:text-white hover:bg-normalPurple focus:ring-blue-500 focus:text-white`}
+            onClick={() => {
+              setGender("All")
+            }}
+          >
+            All
           </button>
-          <button className="sm:min-w-[160px] min-w-[90px] px-4 py-2 text-sm font-medium bg-darkPurple border-2 border-l-0 rounded-r-lg border-normalPurple text-white hover:text-white hover:bg-normalPurple focus:ring-blue-500 focus:text-white">
-            Messages
+          <button 
+            className={`sm:min-w-[160px] min-w-[90px] px-4 py-2 text-sm font-medium ${gender === "Masculine" ? "bg-normalPurple" : "bg-darkPurple"} border-2 border-l-0 rounded-r-lg border-normalPurple text-white hover:text-white hover:bg-normalPurple focus:ring-blue-500 focus:text-white`}
+            onClick={() => {
+              setGender("Masculine")
+            }}
+          >
+            Masculine
           </button>
         </div>
 
@@ -59,8 +108,10 @@ const Page = () => {
         </div>
 
         <div className='w-4/5 flex flex-col items-center gap-4'>
-          <p className='font-extralight'>()</p>
-          <input id="steps-range" type="range" min={0} max={3} value={age} onChange={(ele)=>setAge(parseInt(ele.target.value))} className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-darkPurple"></input>
+          <p className='font-extralight'>{zipAge(age)}</p>
+          <input id="steps-range" type="range" min={0} max={3} value={age} onChange={(ele)=>{
+            setAge(parseInt(ele.target.value))
+          }} className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-darkPurple"></input>
         </div>
 
 
