@@ -13,6 +13,7 @@ const Page = () => {
         gender: typeof tempGender === "string" ? tempGender : "All",
         age: typeof tempAge === "string" ? parseInt(tempAge) : 3
     }
+    
     return (
         <div>{clothe}</div>
     )
