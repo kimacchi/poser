@@ -1,11 +1,16 @@
 "use client"
 
 import React, {useState, useEffect} from 'react'
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
+
+  const router = useRouter();
+
   const [clothing, setClothing] = useState("All");
   const [gender, setGender] = useState("All");
-  const [age, setAge] = useState(3)
+  const [age, setAge] = useState(3);
+  const [valid, setValid] = useState(true);
   // const zipAge = {
   //   0: "Teen",
   //   1: "Adult",
@@ -15,13 +20,13 @@ const Page = () => {
   const zipAge = (item: number) => {
     switch (item) {
       case 0:
-        return "Only Teens"
+        return "Only Babies"
         break;
       case 1:
-        return "Only Adults"
+        return "Only Teens"
         break;
       case 2:
-        return "Only Elders"
+        return "Only Adults"
         break;
       case 3:
         return "All Ages"
@@ -31,9 +36,23 @@ const Page = () => {
         break;
     }
   }
+
+  useEffect(() => {
+    if((age === 0 || age === 1) && (clothing==="Nude")){
+      setValid(false);
+    }else{
+      setValid(true)
+    }
+  }, [clothing, age])
+
+  const forward = () => {
+    let path = `/body-poses/poses?age=${age}&gender=${gender}&clothe=${clothing}`
+    router.push(path);
+  }
+
   return (
     <div className='flex flex-col justify-center items-center h-full px-6'>
-      <div className='flex flex-col justify-center items-center gap-10'>
+      <div className='flex flex-col justify-center items-center gap-8'>
         <div className='flex items-center flex-col gap-6'>
           <h1 className='text-4xl w-full text-center'>Poser Bodies</h1>
           <p className='text-center w-full sm:w-5/6'>
@@ -120,9 +139,12 @@ const Page = () => {
           <div className='h-6 w-6 rounded-full border-4 border-white'></div>
           <div className='h-[1px] w-[45%] bg-white'></div>
         </div>
+        
+        <div>
+          {/* <p>sadfasf</p> */}
+          <button type="button" onClick={forward} disabled={!valid} className="disabled:text-gray-500 enabled:text-white  enabled:hover:scale-105 enabled:shadow-2xl enabled:shadow-normalPurpleShadow font-medium rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2 disabled:cursor-not-allowed disabled:bg-darkGradientDisabled enabled:bg-darkGradient">Search</button>
+        </div>
 
-
-        <button type="button" className="text-white bg-darkGradient hover:scale-105 shadow-2xl shadow-normalPurpleShadow font-medium rounded-lg text-xl px-5 py-2.5 text-center mr-2 mb-2">Search</button>
       </div>
     </div>
   )

@@ -13,13 +13,13 @@ const pb = new PocketBase('http://127.0.0.1:8090');
 let formData = new FormData();
 
 const ageOption = [
-  "0","1","2","3"
+  "3","0","1","2"
 ]
 const clotheOption = [
-  "Nude", "All", "Clothed"
+  "All", "Nude",  "Clothed"
 ]
 const genderOption = [
-  "Feminine", "Masculine", "All"
+  "All", "Feminine", "Masculine"
 ]
 
 const Photos = () => {
@@ -48,6 +48,7 @@ const Photos = () => {
     const record = await pb.collection("poses").create(formData);
     console.log(record);
     formData = new FormData();
+    setFile("")
   }
 
   return (
@@ -62,7 +63,7 @@ const Photos = () => {
               <p>Drag n drop some files here, or click to select files</p>
           }
         </div>
-        <p>age</p>
+        <p>age (0: babies, 1: teens, 2: adults, 3: all)</p>
         <Dropdown options={ageOption} value={"" + age} onChange={(option) => setAge(parseInt(option.value))} placeholder="Select an option"/>
         <p>gender</p>
         <Dropdown options={genderOption} value={gender} onChange={(option) => setGender(option.value)} placeholder="Select an option"/>
@@ -73,14 +74,13 @@ const Photos = () => {
         </button>
       </div>
       <div className='p-4 h-5/6 w-2/5 border-4 rounded-3xl'>
-        <div className='w-1/3 h-1/3 aspect-auto absolute'>
+        <div className='w-full h-full relative'>
           <Image
-            alt="ssdfg"
+            alt={file}
             src={file}
             fill
-
+            objectFit='contain'
           />
-
         </div>
       </div>
     </div>
