@@ -17,9 +17,9 @@ const Page = () => {
         age: typeof tempAge === "string" ? parseInt(tempAge) : 3
     }
     useEffect(() => {
-        let clotheFilter = `${clothe === "All" ? "" : "clothe = " + '"'+ clothe +'"' }`
-        let ageFilter = `${age === 3 ? "" : "age = " + '"'+ age +'"'}`
-        let genderFilter = `${gender === "All" ? "" : "gender = " + '"'+ gender +'"'}`
+        let clotheFilter = `${clothe === "All" ? "clothe != 'nothing'" : "clothe = " + '"'+ clothe +'"' }`
+        let ageFilter = `${age === 3 ? "age != 'nothing'" : "age = " + '"'+ age +'"'}`
+        let genderFilter = `${gender === "All" ? "gender != 'nothing'" : "gender = " + '"'+ gender +'"'}`
 
 
         console.log(`${clotheFilter} ${ageFilter && "&&"} ${ageFilter} ${genderFilter && "&&"} ${genderFilter}`.trim())
