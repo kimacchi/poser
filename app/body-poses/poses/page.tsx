@@ -19,9 +19,17 @@ interface image{
     updated: Date
 }
 
+interface url{
+    url: string,
+    name: string,
+    id: string
+}
+
 const Page = () => {
 
-    const [images, setImages] = useState<any[]>();
+    const [images, setImages] = useState<url[]>([]);
+
+    const [overlayActive, setOverlayActive] = useState(true)
 
     // * Below code is responsible for filtering through the images.
 
@@ -47,38 +55,56 @@ const Page = () => {
             const records = await pb.collection("poses").getFullList({
                 filter: `${clotheFilter} ${ageFilter && "&&"} ${ageFilter} ${genderFilter && "&&"} ${genderFilter} && picture != null`.trim()
             })
-            const temp: (Record<string, string> | image)[] = records
-            setImages(records);
-            console.log(records)
+            records.forEach(record=>{
+                const newImage: url = {
+                    url: `http://127.0.0.1:8090/api/files/${record.collectionId}/${record.id}/${record.picture}`,
+                    name: record.picture,
+                    id: record.id
+                }
+                setImages((prev)=>{
+                    if (!prev)
+                        return [newImage]
+                    else
+                        return [...prev, newImage]
+                })
+            })
+            console.log(records[0].picture)
         }
         localFunc().catch(error=>console.log(error))
-    })
+        window.addEventListener("click", ()=>{
+            setOverlayActive((prev)=>!prev)
+        })
+    }, [])
+    // useEffect(() => {
+    //     console.log(overlayActive)
+    // })
 
     // * Below code is responsible for managing the slideshow.
 
-    const generateURL = (col:string, id:string, name:string)=>{
-        console.log(`http://127.0.0.1:8090/api/files/${col}/${id}/${name}`)
-        return `http://127.0.0.1:8090/api/files/${col}/${id}/${name}`
-    }
+
+    
 
     return (
-        <div>
-            <div className='p-4 h-5/6 w-2/5 border-4 rounded-3xl '>
-                <div className='w-full h-full relative' >
-                    {
-                        images?.map(ele=>{
-                            return (
-                                <Image
-                                    alt={ele.picture}
-                                    src={generateURL(ele.collectionId, ele.id, ele.picture)}
-                                    fill
-                                    objectFit='contain'
-                                    key={ele.id}
-                                />
-                            )
-                        })
-                    }
-                </div>
+        <div className='h-full w-full'>
+            {/* {
+                images?.map(ele=>{
+                    return (
+                        <div className='w-full h-full relative' key={ele.name}>
+                            <Image
+                                alt={ele.name}
+                                src={ele.url}
+                                fill
+                                objectFit='contain'
+                                
+                            />
+                        </div>
+                    )
+                })
+            } */}
+            <div className={'bg-darkPurple w-full h-24 bg-opacity-40 absolute bottom-0 z-10 flex justify-center items-center' + ` ${overlayActive ? "" : "hidden"}`}>
+                <div></div>
+                <div></div>
+                <div></div>
             </div>
         </div>
     )
