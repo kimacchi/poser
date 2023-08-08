@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import { useSearchParams} from "next/navigation"
 import PocketBase from 'pocketbase';
 import Image from 'next/image';
@@ -81,7 +81,30 @@ const Page = () => {
 
     // * Below code is responsible for managing the slideshow.
 
+    const next =() => {
+        console.log("next");
+        setImages(prev => {
+            let temp = prev;
+            const item = temp.shift()
+            if(item){
+                temp = [...temp, item]
+                return temp
+            }
+            return prev
+        })
+    }
 
+    const previous = () => {
+        setImages(prev => {
+            let temp = prev;
+            const item = temp.pop()
+            if(item){
+                temp = [item, ...temp]
+                return temp
+            }
+            return prev
+        })
+    }
     
 
     return (
@@ -101,10 +124,17 @@ const Page = () => {
                     )
                 })
             } */}
-            <div className={'bg-darkPurple w-full h-24 bg-opacity-40 absolute bottom-0 z-10 flex justify-center items-center' + ` ${overlayActive ? "" : "hidden"}`}>
-                <div></div>
-                <div></div>
-                <div></div>
+            <div className={'bg-darkPurple gap-8 w-full h-24 bg-opacity-40 absolute bottom-0 z-10 flex justify-center items-center' + ` ${overlayActive ? "" : "hidden"}`}>
+                <button onClick={previous} className='hover:bg-lightPurple hover:bg-opacity-20 p-3 flex items-center justify-center rounded-full'>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-chevron-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                    </svg>
+                </button>
+                <button onClick={next} className='hover:bg-lightPurple hover:bg-opacity-20 p-3 flex items-center justify-center rounded-full' >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-chevron-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                    </svg>
+                </button>
             </div>
         </div>
     )
