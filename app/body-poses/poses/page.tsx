@@ -71,15 +71,17 @@ const Page = () => {
             console.log(records[0].picture)
         }
         localFunc().catch(error=>console.log(error))
-        window.addEventListener("click", ()=>{
-            setOverlayActive((prev)=>!prev)
-        })
+        window.addEventListener("click", handleOverlayStatus)
     }, [])
     // useEffect(() => {
     //     console.log(overlayActive)
     // })
 
     // * Below code is responsible for managing the slideshow.
+    
+    const handleOverlayStatus = () => {
+        // setOverlayActive((prev)=>!prev)
+    }
 
     const next =() => {
         console.log("next");
@@ -105,6 +107,17 @@ const Page = () => {
             return prev
         })
     }
+
+    const overlayHideControl = (hideable: boolean) => {
+        if(!hideable){
+            console.log("mouse entered")
+            window.removeEventListener("click", handleOverlayStatus)
+        }
+        else{
+            console.log("mouse left")
+            window.addEventListener("click", handleOverlayStatus)
+        }
+    }
     
 
     return (
@@ -124,15 +137,38 @@ const Page = () => {
                     )
                 })
             } */}
-            <div className={'bg-darkPurple gap-8 w-full h-24 bg-opacity-40 absolute bottom-0 z-10 flex justify-center items-center' + ` ${overlayActive ? "" : "hidden"}`}>
+            {
+                images &&
+                <div className='w-full h-full relative'>
+                    <Image
+                        alt={images[0].name}
+                        src={images[0].url}
+                        fill
+                        objectFit='contain'
+                        
+                    />
+                </div>
+            }
+            <div 
+                className={'bg-darkPurple gap-8 w-full h-24 bg-opacity-40 absolute bottom-0 z-10 flex justify-center items-center' + ` ${overlayActive ? "" : "invisible"}`}
+                onMouseEnter={() => {
+                    overlayHideControl(false)
+                }}
+                onMouseLeave={() => {
+                    overlayHideControl(true)
+                }}
+                // onMouseOut={()=>{
+                //     overlayHideControl(true)
+                // }}
+            >
                 <button onClick={previous} className='hover:bg-lightPurple hover:bg-opacity-20 p-3 flex items-center justify-center rounded-full'>
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-chevron-left" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                        <path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                     </svg>
                 </button>
                 <button onClick={next} className='hover:bg-lightPurple hover:bg-opacity-20 p-3 flex items-center justify-center rounded-full' >
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-chevron-right" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                        <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
                     </svg>
                 </button>
             </div>
